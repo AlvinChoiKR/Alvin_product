@@ -1,3 +1,31 @@
+// Theme Toggle
+const themeToggle = document.getElementById('theme-toggle');
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+}
+
+// Initialize theme from localStorage or system preference
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        setTheme(savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+    }
+}
+
+themeToggle.addEventListener('click', toggleTheme);
+initTheme();
+
+// Lotto Number Generator
 const generateBtn = document.getElementById('generate-btn');
 const numbersContainer = document.querySelector('.numbers-container');
 
@@ -24,6 +52,7 @@ generateBtn.addEventListener('click', () => {
             numberEl.style.color = 'white';
         } else if (number <= 30) {
             numberEl.style.backgroundColor = '#FFEB3B';
+            numberEl.style.color = '#333';
         } else if (number <= 40) {
             numberEl.style.backgroundColor = '#4CAF50';
             numberEl.style.color = 'white';
